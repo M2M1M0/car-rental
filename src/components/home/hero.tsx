@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-const Hero = ({title}: any) => {
+const Hero = () => {
     return (
         <section className="flex gap-8 w-full h-48">
             <div className="flex-1 bg-sky-600 rounded-lg p-5 flex flex-col">
@@ -13,7 +13,6 @@ const Hero = ({title}: any) => {
                         Ease of doing a car rental safely and
                         reliably Of course at a low price
                     </p>
-                    {title}
                 </div>
                 <div className="relative w-full h-full flex justify-center -mt-12">
                     <Image src="/nissan.png" alt="Hero Car" width={400} height={100}

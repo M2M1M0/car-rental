@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import AuthProvider from "@/providers/sessionProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,18 +13,21 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
+  children, session
 }: Readonly<{
   children: React.ReactNode;
+  session: any
 }>) {
   return (
     <html lang="en">
       <body className={inter.className}>
+        <AuthProvider session={session}>
           <Header />
           <main className="min-h-[80vh]">
             {children}
           </main>
           <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

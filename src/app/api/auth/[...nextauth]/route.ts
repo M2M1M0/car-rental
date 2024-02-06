@@ -6,8 +6,6 @@ import GithubProvider from "next-auth/providers/github";
 
 import User from "@/models/user.model";
 import connectToDB from "@/database";
-import axios from "axios";
-import { pages } from "next/dist/build/templates/app-page";
 
 
 const authOptions = {
@@ -35,7 +33,6 @@ const authOptions = {
                 const user = await User.findOne({ username: credentials.username })
 
                 if (!user) {
-                    alert("Invalid Credentials");
                     console.log("Invalid Credentials")
                     return null
                 }
@@ -46,7 +43,6 @@ const authOptions = {
                 if (isMatch) {
                     return user;
                 } else {
-                    alert("Invalid Credentials");
                     console.log("Invalid Credentials")
                     return null;
                 }
@@ -55,7 +51,7 @@ const authOptions = {
     ],
     pages: {
         signIn: "/sign-in",
-      },
+    },
     // callbacks: {
     //     async signIn({ user, account }: { user: any, account: any }) {
     //         if (account.provider === "github") {
