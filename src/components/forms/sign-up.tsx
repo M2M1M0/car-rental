@@ -1,0 +1,124 @@
+"use client"
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+
+import { useForm, SubmitHandler } from "react-hook-form"
+import { useMutation } from "react-query";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import toast, { Toaster } from 'react-hot-toast';
+
+interface IFormInput {
+    email: string
+    username: string
+    password: string
+}
+
+
+const SignUpForm = () => {
+
+    const router = useRouter()
+    const [isLoading, setIsLoading] = useState(false);
+
+    const { register, handleSubmit } = useForm<IFormInput>()
+
+    const registerUser = async (userData: any) => {
+
+        try {
+            setIsLoading(true)
+            const response = await axios.post(
+                process.env.NEXT_PUBLIC_BASE_URL! + "register",
+                userData
+            );
+            toast.success("Register Success")
+            if (response.status === 201) router.push("/sign-in")
+
+        } catch (error: any) {
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                // console.log(error.response.data.message);
+                toast.error(error.response.data.message);
+
+                // console.log(error.response.status);
+                // console.log(error.response.headers);
+            } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                // console.log(error.request);
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                // console.log('Error', error.message);
+                toast.error(error.message)
+            }
+            // console.log(error.config);
+        } finally {
+            setIsLoading(false)
+        }
+    };
+
+    const mutation = useMutation(registerUser);
+
+    const onSubmit: SubmitHandler<IFormInput> = async (userData) => {
+        mutation.mutate(userData);
+
+    }
+
+
+    return (
+        <>
+            <article className="w-full h-[70vh] flex items-center justify-center">
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="flex flex-col space-y-2 p-8 bg-white">
+                    <p className="text-center font-bold text-lg uppercase">Registration</p>
+                    <div>
+                        <label>Email</label>
+                        <input {...register("email")}
+                            // onChange={() => handleChange}
+                            placeholder="Example@company.com"
+                            type="email"
+                            className="border text-sm w-full bg-slate-100 rounded-md p-1.5" />
+                    </div>
+
+                    <div>
+                        <label>Username</label>
+                        <input {...register("username")}
+                            // onChange={() => handleChange}
+                            placeholder="Username"
+                            className="border text-sm w-full bg-slate-100 rounded-md p-1.5" />
+                    </div>
+
+                    <div>
+                        <label>Password</label>
+                        <input {...register("password")}
+                            // onChange={() => handleChange}
+                            placeholder="Password"
+                            type="password"
+                            className="border text-sm w-full bg-slate-100 rounded-md p-1.5" />
+                    </div>
+
+                    <div className="flex flex-col gap-2 pt-4">
+                        <input disabled={isLoading}
+                            type="submit"
+                            value={"Sign up"}
+                            className="btn__bg px-6 py-1 uppercase rounded-md text-white disabled:bg-white" />
+
+                        <p>
+                            Have an account? {" "}
+                            <Link href={"/sign-in"}
+                                className="text-blue-500">Sign In</Link>
+                        </p>
+                    </div>
+                    <Toaster />
+                </form>
+            </article>
+        </>
+    );
+};
+
+export default SignUpForm;
