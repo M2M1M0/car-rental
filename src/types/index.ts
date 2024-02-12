@@ -8,4 +8,5 @@ export interface FilterProps {
 
 export interface CarCardProps {
     variant?: string
+    getAllCars?: any
 }

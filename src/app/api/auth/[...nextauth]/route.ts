@@ -22,7 +22,7 @@ const authOptions = {
         CredentialsProvider({
             name: "Credentials",
             credentials: {
-                username: { label: "Username", type: "text", placeholder: "jsmith" },
+                username: { label: "Username", type: "text"},
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {
@@ -49,31 +49,24 @@ const authOptions = {
             },
         }),
     ],
-    pages: {
-        signIn: "/sign-in",
-    },
+    // pages: {
+    //     signIn: "/sign-in",
+    //     signUp: "/sign-up",
+    // },
     // callbacks: {
-    //     async signIn({ user, account }: { user: any, account: any }) {
-    //         if (account.provider === "github") {
-    //             const { name, email } = user;
-    //             try {
-    //                 await connectToDB();
-    //                 const isUserExists = await User.findOne({ email });
+    //     // Add or uncomment the session callback
+    //     async session({ session, user }: { session: any, user: any }) {
+    //         // Assuming `user` object has the properties you want to include in the session
+    //         // For example, adding user id and email to the session
+    //         session.user.id = user.id; // Add user's ID to the session
+    //         session.user.email = user.email; // Ensure user's email is included in the session (usually included by default)
 
-    //                 if (!isUserExists) {
-    //                     const res = await axios.post(NEXT_PUBLIC_BASE_URL,)
+    //         // You can add more user properties to the session as needed
+    //         // session.user.customProperty = user.customProperty;
 
-    //                     if (res.success) {
-    //                         return user;
-    //                     }
-    //                 }
-    //             } catch (error) {
-    //                 console.log(error);
-    //             }
-    //         }
-
-    //         return user;
+    //         return session; // Return the modified session
     //     },
+    //     // Your other callbacks (e.g., signIn)
     // },
 };
 

@@ -4,6 +4,7 @@ import Logo from "./logo"
 import Link from "next/link"
 import { Links } from "@/constants"
 import { signIn, signOut, useSession } from 'next-auth/react'
+import Image from "next/image"
 
 
 const Header = () => {
@@ -14,7 +15,6 @@ const Header = () => {
         console.log(session, "Session")
     }
 
-    
     return (
         <>
             <header className='sticky z-50 top-0 w-full p-5 bg-white flex justify-between items-center'>
@@ -34,17 +34,22 @@ const Header = () => {
                     Login
                 </Link> */}
 
-                {/* <button onClick={() => signIn()}>Sign in</button> */}
                 {!session
                     ? <button className="btn__bg py-1 px-3 text-xs text-white rounded-md"
                         onClick={() => signIn("credentials", { callbackUrl: "/" })}>
                         Sign in
                     </button>
-                    :
-                    <button className="btn__bg py-1 px-3 text-xs text-white rounded-md"
-                        onClick={() => signOut()}>
-                        Sign out
-                    </button>
+                    : (
+                        <>
+                            <button className="btn__bg py-1 px-3 text-xs text-white rounded-md"
+                                onClick={() => signOut()}>
+                                Sign out
+                            </button>
+                            <p className="hidden md:flex">
+                                {session?.user?.email}
+                            </p>
+                        </>
+                    )
                 }
                 {/* <button onClick={async () => {
                     const result: any = await signIn();
@@ -63,12 +68,7 @@ const Header = () => {
                         height={20}
                         className="!w-8 !h-8 rounded-full object-cover" />
                 </Link> */}
-                {session &&
-                    <p>
-                        {session?.user?.email}
-                    </p>
-                }
-            </header>
+                </header>
         </>
     )
 }

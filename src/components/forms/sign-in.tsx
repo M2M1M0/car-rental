@@ -23,7 +23,7 @@ const SignInForm = () => {
 
     const { register, handleSubmit } = useForm<IFormInput>()
 
-    const registerUser = async (userData: any) => {
+    const userLogin = async (userData: any) => {
 
         try {
             setIsLoading(true)
@@ -33,6 +33,7 @@ const SignInForm = () => {
             );
             toast.success("Login Success")
             if (response.status === 200) router.push("/")
+            return response.data.data;
 
         } catch (error: any) {
             if (error.response) {
@@ -59,7 +60,7 @@ const SignInForm = () => {
         }
     };
 
-    const mutation = useMutation(registerUser);
+    const mutation = useMutation(userLogin);
 
     const onSubmit: SubmitHandler<IFormInput> = async (userData) => {
         mutation.mutate(userData);

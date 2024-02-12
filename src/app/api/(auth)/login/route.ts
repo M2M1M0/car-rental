@@ -7,8 +7,8 @@ export async function POST(req: Request) {
     await connectToDB();
     const { username, password } = await req.json();
 
-    const isUserExist = await User.findOne({ username })
-    if (!isUserExist) {
+    const user = await User.findOne({ username })
+    if (!user) {
       return NextResponse.json({
         success: false,
         message: "User Not Found",
@@ -17,10 +17,11 @@ export async function POST(req: Request) {
 
 
     // ======== Chack Password
-    if (isUserExist.password === password) {
+    if (user.password === password) {
       return NextResponse.json({
         success: false,
         message: "Login Sucess",
+        data: user
       }, { status: 200 });
     } else {
       return NextResponse.json({
