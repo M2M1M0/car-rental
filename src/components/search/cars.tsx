@@ -1,8 +1,9 @@
-"use client" 
+"use client"
 import React from 'react'
 import CarCard from '../car-card'
 import { useQuery } from 'react-query';
 import axios from 'axios';
+import { BiLoader } from 'react-icons/bi';
 
 const headers = {
     "Content-Type": "application/json",
@@ -24,9 +25,6 @@ const Cars = () => {
         {
             keepPreviousData: true,
             retry: false,
-            onSuccess: (res) => {
-                console.log("Cars fetched Success", res.data.data);
-            },
             onError: (err) => {
                 console.log("Cars fetching Error", err);
             },
@@ -34,16 +32,31 @@ const Cars = () => {
     );
 
     const cars = getAllCars?.data?.data?.data
+    console.log(cars, "cars")
 
 
     return (
         <div className='mt-4 grid md:grid-cols-3 gap-2 md:gap-6'>
-            {cars?.length === 0 ? (
+            {getAllCars?.isFetching &&
+
                 <div className='h-48 flex items-center justify-center w-full'>
-                    No Car Found
+                    <BiLoader className='animate-spin' size={30} />
                 </div>
-            ) :
-                <CarCard variant="allCars" getAllCars={getAllCars} />
+            }
+            {cars?.length === 0
+                ? (
+                    <div className='h-48 flex items-center justify-center w-full'>
+                        No Car Found
+                    </div>
+                )
+                : cars?.map((car: any) => (
+                    <CarCard
+                        key={car._id}
+                        car={car}
+                        variant="allCars"
+                        getAllCars={getAllCars} />
+                ))
+
             }
         </div>
     )

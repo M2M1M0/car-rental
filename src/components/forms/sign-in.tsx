@@ -9,12 +9,12 @@ import { useMutation } from "react-query";
 
 import axios from "axios";
 import toast, { Toaster } from 'react-hot-toast';
+import { signIn } from "next-auth/react";
 
 interface IFormInput {
     username: string
     password: string
 }
-
 
 const SignInForm = () => {
 
@@ -27,34 +27,51 @@ const SignInForm = () => {
 
         try {
             setIsLoading(true)
-            const response = await axios.post(
-                process.env.NEXT_PUBLIC_BASE_URL! + "login",
-                userData
-            );
-            toast.success("Login Success")
-            if (response.status === 200) router.push("/")
-            return response.data.data;
+            const result = await signIn('credentials', {
+                username: userData.username,
+                password: userData.password,
+                redirect: false, // Prevent automatic redirection
+                callbackUrl: "/"
+            });
+
+            if (result?.error) {
+                // Handle error (e.g., wrong credentials)
+                toast.error(result.error);
+
+            } else {
+                // No error, proceed to redirect
+                toast.success("Login Success");
+                await router.prefetch('/');
+                router.push(result?.url || "/");
+            }
+            // const response = await axios.post(
+            //     process.env.NEXT_PUBLIC_BASE_URL! + "login",
+            //     userData
+            // );
+            // return response.data.data;
 
         } catch (error: any) {
-            if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
-                // console.log(error.response.data.message);
-                toast.error(error.response.data.message);
+            // if (error.response) {
+            //     // The request was made and the server responded with a status code
+            //     // that falls out of the range of 2xx
+            //     // console.log(error.response.data.message);
+            //     toast.error(error.response.data.message);
 
-                // console.log(error.response.status);
-                // console.log(error.response.headers);
-            } else if (error.request) {
-                // The request was made but no response was received
-                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                // http.ClientRequest in node.js
-                // console.log(error.request);
-            } else {
-                // Something happened in setting up the request that triggered an Error
-                // console.log('Error', error.message);
-                toast.error(error.message)
-            }
-            // console.log(error.config);
+            //     // console.log(error.response.status);
+            //     // console.log(error.response.headers);
+            // } else if (error.request) {
+            //     // The request was made but no response was received
+            //     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            //     // http.ClientRequest in node.js
+            //     // console.log(error.request);
+            // } else {
+            //     // Something happened in setting up the request that triggered an Error
+            //     // console.log('Error', error.message);
+            //     toast.error(error.message)
+            // }
+            console.log(error);
+            toast.error("Wrong Credentials!")
+
         } finally {
             setIsLoading(false)
         }
@@ -78,23 +95,24 @@ const SignInForm = () => {
 
                     <div>
                         <label>Username</label>
-                        <input {...register("username")}
-                            // onChange={() => handleChange}
+                        <input
+                            {...register("username")}
                             placeholder="Username"
                             className="border text-sm w-full bg-slate-100 rounded-md p-1.5" />
                     </div>
 
                     <div>
                         <label>Password</label>
-                        <input {...register("password")}
-                            // onChange={() => handleChange}
+                        <input
+                            {...register("password")}
                             placeholder="Password"
                             type="password"
                             className="border text-sm w-full bg-slate-100 rounded-md p-1.5" />
                     </div>
 
                     <div className="flex flex-col gap-2 pt-4">
-                        <input disabled={isLoading}
+                        <input
+                            disabled={isLoading}
                             type="submit"
                             value={"Login"}
                             className="btn__bg px-6 py-1 uppercase rounded-md text-white disabled:bg-white" />

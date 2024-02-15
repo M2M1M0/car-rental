@@ -9,10 +9,9 @@ import CarDetails from './car-details';
 import { useState } from 'react';
 import { CiHeart } from 'react-icons/ci';
 import EditCar from './profile/edit-car';
-import { BiLoader } from 'react-icons/bi';
 
 
-const CarCard = ({ variant, getAllCars }: CarCardProps) => {
+const CarCard = ({ variant, getAllCars, car }: CarCardProps) => {
 
     let [isOpen, setIsOpen] = useState(false)
     function openModal() {
@@ -24,17 +23,12 @@ const CarCard = ({ variant, getAllCars }: CarCardProps) => {
 
     return (
         <main>
-            {getAllCars?.isFetching
-                ? (
-                    <div className='h-48 flex items-center justify-center w-full'>
-                        <BiLoader className='animate-spin' size={30} />
-                    </div>
-                )
-                : (
+            {getAllCars?.isSuccess &&
+                (
                     <section className='w-full min-w-56 p-4 rounded-md shadow-md bg-white'>
                         <div className='flex flex-col'>
                             <div className='flex justify-between'>
-                                <h3 className='text-sm font-bold'>Koenigsegg</h3>
+                                <h3 className='text-sm font-bold'>{car?.title}</h3>
                                 {/* === Edit own Car */}
                                 {variant === "own" ? (
                                     <EditCar />
@@ -49,34 +43,34 @@ const CarCard = ({ variant, getAllCars }: CarCardProps) => {
 
                             </div>
                         </div>
-                        <p className='text__medium '>Sport</p>
+                        <p className='text__medium '>{car?.type}</p>
 
                         <div className={`${variant === "allCars" && "flex md:flex-col"}`}>
-                            <div className='py-8 px-2'>
-                                <Image src="/nissan.png" alt="Car" width={200} height={100}
-                                    className='object-contain -mt-16' />
+                            <div className='my-2 py-16 px-2 relative w-full h-full'>
+                                <Image src={`/${car?.images[0] ? car?.images[0] : ""}`} alt="Car" fill
+                                    className='object-contain' />
                             </div>
                             <div className={`${variant === "own" ? "hidden" : "block"}`}>
 
                                 <div className={`${variant === "allCars" && "justify-end mb-5 flex-col md:flex-row"} flex flex-row md:justify-between  gap-3`}>
-                                    <div className='text__medium flex gap-1 '>
+                                    <div className='text__medium flex items-center gap-1 '>
                                         <FaGasPump />
-                                        <span>80L</span>
+                                        <span>{car?.fuelCapacity}L</span>
                                     </div>
-                                    <div className='text__medium flex gap-1 '>
+                                    <div className='text__medium flex items-center gap-1 '>
                                         <GiSteeringWheel />
-                                        <span>Manuel</span>
+                                        <span>{car?.transmission}</span>
                                     </div>
-                                    <div className='text__medium flex gap-1 '>
+                                    <div className='text__medium flex items-center gap-1 '>
                                         <MdPeople />
-                                        <span className='whitespace-nowrap'>4 People</span>
+                                        <span className='whitespace-nowrap'>{car.capacity} People</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div className={`${variant === "own" ? "hidden" : "block"} flex justify-between mt-2 gap-x3`}>
-                            <p className='text-sm'>$99.00/
+                            <p className='text-sm'>ETB {car?.price}/
                                 <span className='text__medium  self-end'>{" "}day</span>
                             </p>
                             <button type="button"
@@ -86,7 +80,11 @@ const CarCard = ({ variant, getAllCars }: CarCardProps) => {
                             </button>
 
                             {/* Car Details Dialog */}
-                            <CarDetails variant={variant} isOpen={isOpen} setIsOpen={setIsOpen} />
+                            <CarDetails
+                                car={car}
+                                variant={variant}
+                                isOpen={isOpen}
+                                setIsOpen={setIsOpen} />
                         </div>
                     </section >
                 )}

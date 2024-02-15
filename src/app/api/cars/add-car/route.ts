@@ -1,5 +1,6 @@
 import connectToDB from "@/database";
 import Car from "@/models/car.model";
+import User from "@/models/user.model";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -7,11 +8,17 @@ export async function POST(req: Request) {
     await connectToDB();
     // title,type,price,capacity,transmission,location,fuelCapacity,description,images
 
-    const { title, type, price, capacity, transmission, location, fuelCapacity, description, images } = await req.json();
+    const { owner, title, type, price, capacity, transmission, location, fuelCapacity, description, images } = await req.json();
 
-    const newCar = await Car.create({ title, type, price, capacity, transmission, location, fuelCapacity, description, images });
+    const newCar = await Car.create({ owner, title, type, price, capacity, transmission, location, fuelCapacity, description, images });
 
-    if (newCar) {
+    const user = await User.findById({ _id: owner });
+
+
+    if (newCar && user) {
+      user.cars.push(newCar._id); // Push the new car's ID to the user's cars array
+      await user.save(); // Save the user document to update the database
+
       return NextResponse.json({
         success: true,
         message: "Car Registered",

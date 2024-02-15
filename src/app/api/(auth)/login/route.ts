@@ -7,6 +7,7 @@ export async function POST(req: Request) {
     await connectToDB();
     const { username, password } = await req.json();
 
+    // ===== User Exist
     const user = await User.findOne({ username })
     if (!user) {
       return NextResponse.json({
@@ -15,8 +16,7 @@ export async function POST(req: Request) {
       }, { status: 404 });
     }
 
-
-    // ======== Chack Password
+    // ======== Check Password
     if (user.password === password) {
       return NextResponse.json({
         success: false,
@@ -29,19 +29,7 @@ export async function POST(req: Request) {
         message: "Invalid Password",
       }, { status: 409 });
     }
-    // const comparePassword = await 
 
-    // if (newUser) {
-    //   return NextResponse.json({
-    //     success: true,
-    //     message: "User registered",
-    //   }, { status: 201 });
-    // } else {
-    //   return NextResponse.json({
-    //     success: false,
-    //     message: "failed to register the user ! Please try again",
-    //   });
-    // }
   } catch (e) {
     console.log(e, "User creation Error");
 

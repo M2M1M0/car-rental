@@ -10,14 +10,14 @@ enum CarType {
     SUV = "SUV",
     MPV = "MPV",
     Sedan = "Sedan",
-    Couple = "Couple",
+    Coupe = "Coupe",
     Hatchback = "Hatchback"
 }
 
 const carSchema = new mongoose.Schema(
     {
         owner: {
-            trpe: mongoose.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
         title: {
@@ -25,8 +25,9 @@ const carSchema = new mongoose.Schema(
             required: true,
         },
         type: {
-            type: CarType,
+            type: String,
             required: true,
+            enum: Object.values(CarType),
         },
         price: {
             type: Number,
@@ -37,8 +38,9 @@ const carSchema = new mongoose.Schema(
             required: true,
         },
         transmission: {
-            type: Transmission,
+            type: String,
             required: true,
+            enum: Object.values(Transmission),
         },
         location: {
             type: String,

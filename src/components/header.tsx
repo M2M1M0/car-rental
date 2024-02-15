@@ -1,19 +1,46 @@
 "use client"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import Logo from "./logo"
 import Link from "next/link"
 import { Links } from "@/constants"
 import { signIn, signOut, useSession } from 'next-auth/react'
 import Image from "next/image"
+import { useQuery } from "react-query"
+import axios from "axios"
+
+const headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "",
+};
 
 
 const Header = () => {
     const pathName = usePathname()
     const { data: session } = useSession();
+    const router = useRouter()
 
-    if (session) {
-        console.log(session, "Session")
-    }
+    //@ts-ignore
+    let userID = session?.user?._id
+    const getUserInfo = useQuery(
+        `getUserInfo ${userID}`,
+        async () =>
+            await axios.get(
+                `${process.env.NEXT_PUBLIC_BASE_URL}user/show-profile/${userID}`,
+                {
+                    headers,
+                }
+            ),
+        {
+            keepPreviousData: true,
+            retry: false,
+            onError: (err) => {
+                console.log("User Detail Info", err);
+            },
+        }
+    );
+
+    const currentUser = getUserInfo?.data?.data?.message
 
     return (
         <>
@@ -29,10 +56,6 @@ const Header = () => {
                     ))}
 
                 </ul>
-                {/* <Link href={"/sign-in"}
-                    className="btn__bg py-1 px-3 text-xs text-white rounded-sm">
-                    Login
-                </Link> */}
 
                 {!session
                     ? <button className="btn__bg py-1 px-3 text-xs text-white rounded-md"
@@ -40,15 +63,26 @@ const Header = () => {
                         Sign in
                     </button>
                     : (
-                        <>
-                            <button className="btn__bg py-1 px-3 text-xs text-white rounded-md"
-                                onClick={() => signOut()}>
+                        <div className="flex gap-2 items-center">
+                            <button className="btn__bg py-1 px-3 text-xs text-white rounded-md hidden md:flex"
+                                onClick={() => {
+                                    signOut()
+                                    router.push("/")
+                                }}>
                                 Sign out
                             </button>
-                            <p className="hidden md:flex">
-                                {session?.user?.email}
-                            </p>
-                        </>
+                            {
+                                //@ts-ignore
+                                <Link href={`/me/${session?.user?._id}`}>
+                                    <Image
+                                        src={`/${currentUser?.profilePicture}`}
+                                        alt="Profile"
+                                        width={20}
+                                        height={20}
+                                        className="!w-8 !h-8 rounded-full object-cover" />
+                                </Link>
+                            }
+                        </div>
                     )
                 }
                 {/* <button onClick={async () => {
@@ -68,7 +102,7 @@ const Header = () => {
                         height={20}
                         className="!w-8 !h-8 rounded-full object-cover" />
                 </Link> */}
-                </header>
+            </header>
         </>
     )
 }

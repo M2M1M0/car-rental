@@ -5,6 +5,7 @@ import CarCard from '../car-card'
 import Link from 'next/link'
 import { useQuery } from 'react-query';
 import axios from 'axios';
+import { BiLoader } from 'react-icons/bi';
 
 const headers = {
     "Content-Type": "application/json",
@@ -26,9 +27,6 @@ const PopularCars = () => {
         {
             keepPreviousData: true,
             retry: false,
-            onSuccess: (res) => {
-                console.log("Cars fetched Success", res.data.data);
-            },
             onError: (err) => {
                 console.log("Cars fetching Error", err);
             },
@@ -45,12 +43,24 @@ const PopularCars = () => {
                     className='underline text-xs cursor-pointer hover:text-gray-500'>View All</Link>
             </div>
             <div className='gap-4 flex overflow-x-auto mb-1'>
+                {getAllCars?.isFetching &&
+
+                    <div className='h-48 flex items-center justify-center w-full'>
+                        <BiLoader className='animate-spin' size={30} />
+                    </div>
+                }
+
                 {cars?.length === 0 ? (
                     <div className='h-48 flex items-center justify-center w-full'>
                         No Car Found
                     </div>
                 ) :
-                    <CarCard getAllCars={getAllCars} />
+                    cars?.map((car: any) => (
+                        <CarCard
+                            key={car._id}
+                            car={car}
+                            getAllCars={getAllCars} />
+                    ))
                 }
             </div>
         </div>

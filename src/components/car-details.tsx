@@ -10,9 +10,10 @@ interface Props {
     variant?: string;
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>
+    car: any
 }
 
-const CarDetails = ({ variant, isOpen, setIsOpen }: Props) => {
+const CarDetails = ({ car, variant, isOpen, setIsOpen }: Props) => {
 
     function closeModal() {
         setIsOpen(false)
@@ -55,20 +56,20 @@ const CarDetails = ({ variant, isOpen, setIsOpen }: Props) => {
                                         {/* Car Image */}
                                         <section className='grid grid-rows-3 gap-3 h-52 md:h-full'>
                                             <div className='relative w-full h-full row-span-2'>
-                                                <Image src="/rolls-royce.jpg" alt="Car" fill
+                                                <Image src={`/${car?.images[0]}`} alt="Car" fill
                                                     className='object-cover rounded-md' />
                                             </div>
                                             <div className='grid grid-cols-3 gap-2 row-span-1'>
                                                 <div className='relative w-full h-full'>
-                                                    <Image src="/nissan-r.png" alt="Car" fill
+                                                    <Image src={`/${car?.images[2]}`} alt="Car" fill
                                                         className='object-cover rounded-md' />
                                                 </div>
                                                 <div className='relative w-full h-full'>
-                                                    <Image src="/roll.png" alt="Car" fill
+                                                    <Image src={`/${car?.images[1]}`} alt="Car" fill
                                                         className='object-cover rounded-md' />
                                                 </div>
                                                 <div className='relative w-full h-full'>
-                                                    <Image src="/nissan-r.png" alt="Car" fill
+                                                    <Image src={`/${car?.images[3]}`} alt="Car" fill
                                                         className='object-cover rounded-md' />
                                                 </div>
                                             </div>
@@ -77,16 +78,14 @@ const CarDetails = ({ variant, isOpen, setIsOpen }: Props) => {
                                         {/* Car detail Description */}
                                         <section className='flex flex-col gap-3 p-2'>
                                             <h2 className="text-xl font-semibold">
-                                                Nissan GT-R
+                                                {car.title}
                                             </h2>
                                             <div className="flex items-center text-xs gap-2">
                                                 <ArrayStar rating={3} />
                                                 <span className='text__medium'>440+ Reviews</span>
                                             </div>
                                             <p className="text-xs font-serif leading-5">
-                                                Ipsum dolor sit amet consectetur adipisicing elit.
-                                                Placeat molestiae facilis corrupti itaque.
-                                                molestiae facilis corrupti itaque.
+                                                {car.description}
                                             </p>
 
                                             {/*  */}
@@ -94,21 +93,21 @@ const CarDetails = ({ variant, isOpen, setIsOpen }: Props) => {
                                                 <div className='flex flex-col gap-1'>
                                                     <div className='flex justify-between'>
                                                         <p className="text__medium">Car Type</p>
-                                                        <span className="text-xs font-bold">Sport</span>
+                                                        <span className="text-xs font-bold">{car.type}</span>
                                                     </div>
                                                     <div className='flex justify-between'>
                                                         <p className="text__medium">Transm.</p>
-                                                        <span className="text-xs font-bold">Manual</span>
+                                                        <span className="text-xs font-bold">{car.transmission}</span>
                                                     </div>
                                                 </div>
                                                 <div className='flex flex-col gap-1'>
                                                     <div className='flex justify-between'>
                                                         <p className="text__medium">Capacity</p>
-                                                        <span className="text-xs font-bold">2 Person</span>
+                                                        <span className="text-xs font-bold">{car.capacity} Person</span>
                                                     </div>
                                                     <div className='flex justify-between'>
                                                         <p className="text__medium">Gasoline.</p>
-                                                        <span className="text-xs font-bold">70L</span>
+                                                        <span className="text-xs font-bold">{car.fuelCapacity}L</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -116,7 +115,7 @@ const CarDetails = ({ variant, isOpen, setIsOpen }: Props) => {
                                             {/*  */}
                                             <div className='flex justify-between mt-2'>
                                                 <div className='leading-3'>
-                                                    <p className='text-md'>$99.00/
+                                                    <p className='text-md'>{car.price}/
                                                         <span className='text__medium  self-end'>{" "}day</span>
                                                     </p>
                                                     <span className='text__medium line-through'>
