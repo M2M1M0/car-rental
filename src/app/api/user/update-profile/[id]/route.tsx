@@ -9,7 +9,7 @@ export async function PUT(req: Request) {
         const {
             username,
             email,
-            password,
+            // password,
             profilePicture,
             coverPicture
         } = await req.json();
@@ -19,13 +19,18 @@ export async function PUT(req: Request) {
         // Extract the ID from the URL
         const _id = url.pathname.split('/').pop();
 
-
+        if(_id === undefined){
+            return NextResponse.json({
+                success: false,
+                message: "null for _id",
+            });
+        }
         const userProfile = await User.updateOne(
             { _id },
             {
                 username,
                 email,
-                password,
+                // password,
                 profilePicture,
                 coverPicture
             })

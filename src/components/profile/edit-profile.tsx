@@ -35,10 +35,10 @@ const EditProfile = ({ currentUser, isEditPrOpen, setIsEditProOpen }: Props) => 
         setEmail(e.target.value)
     }
 
-    const [password, setPassword] = useState(null)
-    const handlePasswordChange = (e: any) => {
-        setPassword(e.target.value)
-    }
+    // const [password, setPassword] = useState(null)
+    // const handlePasswordChange = (e: any) => {
+    //     setPassword(e.target.value)
+    // }
 
     const [profileImage, setProfileImage] = useState<File[]>([]);
     const handleProfileChange = (e: any) => {
@@ -57,7 +57,7 @@ const EditProfile = ({ currentUser, isEditPrOpen, setIsEditProOpen }: Props) => 
         let user = {
             username: currentUser?.username,
             email: email || currentUser?.email,
-            password: password || currentUser?.password,
+            // password: password || currentUser?.password,
             profilePicture: profileImage[0]?.name || currentUser?.profilePicture,
             coverPicture: coverImage[0]?.name || currentUser?.coverPicture
         }
@@ -131,7 +131,7 @@ const EditProfile = ({ currentUser, isEditPrOpen, setIsEditProOpen }: Props) => 
                                                         className='col-span-2 text-sm p-1 border-2 rounded-md'
                                                     />
                                                 </div>
-                                                <div className='grid grid-cols-3 items-center gap-2'>
+                                                {/* <div className='grid grid-cols-3 items-center gap-2'>
                                                     <label className='text-md'>
                                                         Password:
                                                     </label>
@@ -142,7 +142,7 @@ const EditProfile = ({ currentUser, isEditPrOpen, setIsEditProOpen }: Props) => 
                                                         onChange={handlePasswordChange}
                                                         className='col-span-2 text-sm p-1 border-2 rounded-md'
                                                     />
-                                                </div>
+                                                </div> */}
                                                 <div className='flex flex-col gap-2 h-36 mt-4'>
 
                                                     <label

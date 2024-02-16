@@ -26,7 +26,7 @@ const RentedCar = ({ getRentCars, cars }: any) => {
                         <CarCard
                             variant='rented'
                             key={car._id}
-                            car={car}
+                            car={car?.car}
                             getAllCars={getRentCars} />
                     ))
                 }

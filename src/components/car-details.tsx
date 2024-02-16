@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import Rent from './search/rent';
 import { ArrayStar } from '@/utils';
+import { User } from '@/helper';
 
 
 interface Props {
@@ -14,6 +15,16 @@ interface Props {
 }
 
 const CarDetails = ({ car, variant, isOpen, setIsOpen }: Props) => {
+
+    // Get user
+    const currentUser = User()
+
+    // Is current user rented this car
+    const filterRentedCar = currentUser?.rent?.filter((rented: any) => rented?.car?._id === car?._id)
+    
+    // Is this car belongs to current user
+    const filterOwnCar = currentUser?.cars?.filter((cars: any) => cars?._id === car?._id)
+
 
     function closeModal() {
         setIsOpen(false)
@@ -61,15 +72,15 @@ const CarDetails = ({ car, variant, isOpen, setIsOpen }: Props) => {
                                             </div>
                                             <div className='grid grid-cols-3 gap-2 row-span-1'>
                                                 <div className='relative w-full h-full'>
-                                                    <Image src={`/${car?.images[2]}`} alt="Car" fill
+                                                    <Image src={`/${car?.images[2] ? car?.images[2] : "cover.jpg"}`} alt="Car" fill
                                                         className='object-cover rounded-md' />
                                                 </div>
                                                 <div className='relative w-full h-full'>
-                                                    <Image src={`/${car?.images[1]}`} alt="Car" fill
+                                                    <Image src={`/${car?.images[1] ? car?.images[1] : "cover.jpg"}`} alt="Car" fill
                                                         className='object-cover rounded-md' />
                                                 </div>
                                                 <div className='relative w-full h-full'>
-                                                    <Image src={`/${car?.images[3]}`} alt="Car" fill
+                                                    <Image src={`/${car?.images[3] ? car?.images[3] : "cover.jpg"}`} alt="Car" fill
                                                         className='object-cover rounded-md' />
                                                 </div>
                                             </div>
@@ -125,15 +136,19 @@ const CarDetails = ({ car, variant, isOpen, setIsOpen }: Props) => {
 
                                                 {/*  */}
 
-
-                                                <button type="button"
-                                                    onClick={openRentModal}
-                                                    className={`${variant === "rented" && "hidden"} btn__bg py-1 px-3 text-xs font-medium text-white rounded-md`}>
-                                                    Rent Now
-                                                </button>
-
+                                                {filterOwnCar?.length === 0 && filterRentedCar?.length === 0 &&
+                                                    <button type="button"
+                                                        onClick={openRentModal}
+                                                        className={`${variant === "rented" && "hidden"} btn__bg py-1 px-3 text-xs font-medium text-white rounded-md`}>
+                                                        Rent Now
+                                                    </button>
+                                                }
                                                 {/*  */}
-                                                <Rent isRentOpen={isRentOpen} setIsRentOpen={setIsRentOpen} />
+                                                <Rent
+                                                    carId={car?._id}
+                                                    setIsOpen={setIsOpen}
+                                                    isRentOpen={isRentOpen}
+                                                    setIsRentOpen={setIsRentOpen} />
 
                                             </div>
 

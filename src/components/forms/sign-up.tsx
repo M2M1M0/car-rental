@@ -6,8 +6,7 @@ import Link from "next/link";
 
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useMutation } from "react-query";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import axios from "axios";
 import toast, { Toaster } from 'react-hot-toast';
 

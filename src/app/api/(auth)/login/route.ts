@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     const { username, password } = await req.json();
 
     // ===== User Exist
-    const user = await User.findOne({ username })
+    const user = await User.findOne({ username: username.toLowerCase() })
     if (!user) {
       return NextResponse.json({
         success: false,

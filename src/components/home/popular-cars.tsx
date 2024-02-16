@@ -3,37 +3,16 @@
 import React from 'react'
 import CarCard from '../car-card'
 import Link from 'next/link'
-import { useQuery } from 'react-query';
-import axios from 'axios';
 import { BiLoader } from 'react-icons/bi';
+import { Cars } from '@/helper';
 
-const headers = {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    Authorization: "",
-};
 
 const PopularCars = () => {
 
-    const getAllCars = useQuery(
-        `getAllCars`,
-        async () =>
-            await axios.get(
-                `${process.env.NEXT_PUBLIC_BASE_URL}cars`,
-                {
-                    headers,
-                }
-            ),
-        {
-            keepPreviousData: true,
-            retry: false,
-            onError: (err) => {
-                console.log("Cars fetching Error", err);
-            },
-        }
-    );
-
-    const cars = getAllCars?.data?.data?.data
+    // Get All cars
+    const response = Cars()
+    let cars = response?.cars
+    let getAllCars = response?.getAllCars
 
     return (
         <div className='flex flex-col gap-1'>

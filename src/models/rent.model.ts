@@ -3,11 +3,11 @@ import mongoose from "mongoose";
 const rentSchema = new mongoose.Schema(
     {
         car: {
-            trpe: mongoose.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "Car"
         },
         rentedBy: {
-            trpe: mongoose.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
         pickUp: {

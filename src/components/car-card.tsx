@@ -20,7 +20,6 @@ const CarCard = ({ variant, getAllCars, car }: CarCardProps) => {
 
     const [heart, setHeart] = useState(false)
 
-
     return (
         <main>
             {getAllCars?.isSuccess &&
@@ -47,7 +46,7 @@ const CarCard = ({ variant, getAllCars, car }: CarCardProps) => {
 
                         <div className={`${variant === "allCars" && "flex md:flex-col"}`}>
                             <div className='my-2 py-16 px-2 relative w-full h-full'>
-                                <Image src={`/${car?.images[0] ? car?.images[0] : ""}`} alt="Car" fill
+                                <Image src={`/${car?.images ? car?.images[0] : ""}`} alt="Car" fill
                                     className='object-contain' />
                             </div>
                             <div className={`${variant === "own" ? "hidden" : "block"}`}>

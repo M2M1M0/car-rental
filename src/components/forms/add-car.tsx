@@ -27,7 +27,7 @@ type FormValues = {
 
 const addCarSchema = Z.object({
     title: Z.string().min(1, { message: 'Title Required' }),
-    type: Z.enum(["Sport", "SUV", "MPV", "Sedan", "Couple", "Hatchback"])
+    type: Z.enum(["Sport", "SUV", "MPV", "Sedan", "Coupe", "Hatchback"])
         .refine(val => val.length > 0, { message: 'Type Required' }),
     price: Z.string().min(1, { message: "Price Required" }),
     capacity: Z.string().min(1, { message: "Capacity in Person Required" }),
@@ -118,7 +118,7 @@ const AddCarForm = () => {
                         <option value="SUV">SUV</option>
                         <option value="MPV">MPV</option>
                         <option value="Sedan">Sedan</option>
-                        <option value="Couple">Couple</option>
+                        <option value="Coupe">Coupe</option>
                         <option value="Hatchback">Hatchback</option>
                     </select>
                     {errors.type && <p className='text-red-500 text-xs'>{errors.type.message}</p>}
@@ -214,7 +214,7 @@ const AddCarForm = () => {
                 <button
                     disabled={isLoading}
                     type="submit"
-                    className={`${!isValid && "cursor-not-allowed"} btn__bg py-2 px-5 text-xs font-medium text-white rounded-md`}>
+                    className={`$ btn__bg py-2 px-5 text-xs font-medium text-white rounded-md`}>
                     {isLoading ? <VscLoading /> : "Register Car"}
                 </button>
             </div>

@@ -14,6 +14,12 @@ export async function POST(req: Request) {
 
     const user = await User.findById({ _id: owner });
 
+    if (owner === undefined || null) {
+      return NextResponse.json({
+        success: false,
+        message: "Invalid owner",
+      });
+    }
 
     if (newCar && user) {
       user.cars.push(newCar._id); // Push the new car's ID to the user's cars array
