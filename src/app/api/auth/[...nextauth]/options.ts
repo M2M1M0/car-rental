@@ -4,6 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 
+import bcrypt from "bcrypt"
 import User from "@/models/user.model";
 import connectToDB from "@/database";
 
@@ -31,15 +32,15 @@ export const options: NextAuthOptions = {
                     // throw new Error("Invalid Credentials")
                     return null
                 }
-                const user = await User.findOne({ username: credentials.username })
+                const user = await User.findOne({ username: credentials.username.toLowerCase() })
 
                 if (!user) {
                     // throw new Error("Invalid Credentials")
                     return null
                 }
 
-                // const isMatch = await bcrypt.compare(credentials.password, user.password);
-                const isMatch = credentials.password === user.password;
+                const isMatch = await bcrypt.compare(credentials.password, user.password);
+                // const isMatch = credentials.password === user.password;
 
                 if (isMatch) {
                     // console.log(user, "User credentials")
@@ -63,7 +64,7 @@ export const options: NextAuthOptions = {
             if (session?.user) {
                 session.user._id = token._id; // Add user's ID to the session
             }
-            
+
             // You can add more user properties to the session as needed
             // session.user.customProperty = user.customProperty;
             return session; // Return the modified session
