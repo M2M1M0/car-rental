@@ -89,14 +89,14 @@ const CarDetails = ({ car, variant, isOpen, setIsOpen }: Props) => {
                                         {/* Car detail Description */}
                                         <section className='flex flex-col gap-3 p-2'>
                                             <h2 className="text-xl font-semibold">
-                                                {car.title}
+                                                {car?.title}
                                             </h2>
                                             <div className="flex items-center text-xs gap-2">
                                                 <ArrayStar rating={3} />
                                                 <span className='text__medium'>440+ Reviews</span>
                                             </div>
                                             <p className="text-xs font-serif leading-5">
-                                                {car.description}
+                                                {car?.description}
                                             </p>
 
                                             {/*  */}
@@ -104,21 +104,21 @@ const CarDetails = ({ car, variant, isOpen, setIsOpen }: Props) => {
                                                 <div className='flex flex-col gap-1'>
                                                     <div className='flex justify-between'>
                                                         <p className="text__medium">Car Type</p>
-                                                        <span className="text-xs font-bold">{car.type}</span>
+                                                        <span className="text-xs font-bold">{car?.type}</span>
                                                     </div>
                                                     <div className='flex justify-between'>
                                                         <p className="text__medium">Transm.</p>
-                                                        <span className="text-xs font-bold">{car.transmission}</span>
+                                                        <span className="text-xs font-bold">{car?.transmission}</span>
                                                     </div>
                                                 </div>
                                                 <div className='flex flex-col gap-1'>
                                                     <div className='flex justify-between'>
                                                         <p className="text__medium">Capacity</p>
-                                                        <span className="text-xs font-bold">{car.capacity} Person</span>
+                                                        <span className="text-xs font-bold">{car?.capacity} Person</span>
                                                     </div>
                                                     <div className='flex justify-between'>
                                                         <p className="text__medium">Gasoline.</p>
-                                                        <span className="text-xs font-bold">{car.fuelCapacity}L</span>
+                                                        <span className="text-xs font-bold">{car?.fuelCapacity}L</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -126,7 +126,7 @@ const CarDetails = ({ car, variant, isOpen, setIsOpen }: Props) => {
                                             {/*  */}
                                             <div className='flex justify-between mt-2'>
                                                 <div className='leading-3'>
-                                                    <p className='text-md'>{car.price}/
+                                                    <p className='text-md'>{car?.price}/
                                                         <span className='text__medium  self-end'>{" "}day</span>
                                                     </p>
                                                     <span className='text__medium line-through'>

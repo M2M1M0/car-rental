@@ -62,7 +62,7 @@ const CarCard = ({ variant, getAllCars, car }: CarCardProps) => {
                                     </div>
                                     <div className='text__medium flex items-center gap-1 '>
                                         <MdPeople />
-                                        <span className='whitespace-nowrap'>{car.capacity} People</span>
+                                        <span className='whitespace-nowrap'>{car?.capacity} People</span>
                                     </div>
                                 </div>
                             </div>
