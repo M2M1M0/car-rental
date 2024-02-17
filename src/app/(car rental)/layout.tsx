@@ -5,13 +5,13 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 
 const queryClient = new QueryClient()
 
-export default function MainLayout({
+function MainLayout({
     children,
     session
-}: Readonly<{
+}: {
     children: React.ReactNode;
     session: any
-}>) {
+}) {
     return (
         <QueryClientProvider client={queryClient} >
             <Header />
@@ -20,3 +20,5 @@ export default function MainLayout({
         </QueryClientProvider>
     )
 }
+
+export default MainLayout
