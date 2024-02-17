@@ -19,11 +19,13 @@ export async function GET(req: Request) {
 
     } else {
 
-      const user = await User.findById(_id).populate("cars").populate({ path: "rent", populate: { path: "car" } });
+      let user;
 
-      // if (user?.cars?.length > 0) {
-      //   await User.findById({ _id }).populate("cars")
-      // }
+      user = await User.findById(_id).populate("cars");
+      
+      if (user?.rent?.length > 0) {
+        user = await User.findById({ _id })?.populate("cars").populate({ path: "rent", populate: { path: "car" } })
+      }
 
 
       if (user) {
