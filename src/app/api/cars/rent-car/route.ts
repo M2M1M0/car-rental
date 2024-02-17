@@ -1,5 +1,4 @@
 import connectToDB from "@/database";
-import Car from "@/models/car.model";
 import Rent from "@/models/rent.model";
 import User from "@/models/user.model";
 import { NextResponse } from "next/server";
