@@ -10,12 +10,13 @@ export const metadata: Metadata = {
   description: "Car Renting Application",
 };
 
-export default function RootLayout({
+
+function RootLayout({
   children, session
-}: Readonly<{
+}: {
   children: React.ReactNode;
   session: any
-}>) {
+}) {
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -28,3 +29,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+export default RootLayout
