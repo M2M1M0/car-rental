@@ -10,7 +10,7 @@ function MainLayout({
     session
 }: {
     children: React.ReactNode;
-    session: any
+    session: any;
 }) {
     return (
         <QueryClientProvider client={queryClient} >
@@ -21,4 +21,4 @@ function MainLayout({
     )
 }
 
-export default MainLayout
+export default MainLayout;
