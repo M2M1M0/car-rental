@@ -6,11 +6,9 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 const queryClient = new QueryClient()
 
 function MainLayout({
-    children,
-    session
+    children
 }: {
     children: React.ReactNode;
-    session: any;
 }) {
     return (
         <QueryClientProvider client={queryClient} >
