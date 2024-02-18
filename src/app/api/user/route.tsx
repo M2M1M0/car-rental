@@ -12,7 +12,16 @@ export async function GET(req: Request) {
       return NextResponse.json({
         success: true,
         message: users,
-      });
+      },
+      {
+        headers: {
+          "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_CLIENT_URL!,
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+          "Access-Control-Allow-Headers": "X-Requested-With,content-type",
+        },
+      }
+    );
     } else {
       return NextResponse.json({
         success: false,
