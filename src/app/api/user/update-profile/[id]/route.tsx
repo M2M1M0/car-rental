@@ -19,7 +19,7 @@ export async function PUT(req: Request) {
         // Extract the ID from the URL
         const _id = url.pathname.split('/').pop();
 
-        if(_id === undefined){
+        if (_id === undefined) {
             return NextResponse.json({
                 success: false,
                 message: "null for _id",
@@ -39,7 +39,16 @@ export async function PUT(req: Request) {
             return NextResponse.json({
                 success: true,
                 message: "Profile Update Successfully",
-            });
+            },
+                {
+                    headers: {
+                        "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_CLIENT_URL!,
+                        "Access-Control-Allow-Credentials": "true",
+                        "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+                        "Access-Control-Allow-Headers": "X-Requested-With,content-type",
+                    },
+                }
+            );
         } else {
             return NextResponse.json({
                 success: false,

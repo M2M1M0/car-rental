@@ -22,7 +22,7 @@ export async function GET(req: Request) {
       let user;
 
       user = await User.findById(_id).populate("cars");
-      
+
       if (user?.rent?.length > 0) {
         user = await User.findById({ _id })?.populate("cars").populate({ path: "rent", populate: { path: "car" } })
       }
@@ -32,7 +32,16 @@ export async function GET(req: Request) {
         return NextResponse.json({
           success: true,
           message: user,
-        });
+        },
+          {
+            headers: {
+              "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_CLIENT_URL!,
+              "Access-Control-Allow-Credentials": "true",
+              "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+              "Access-Control-Allow-Headers": "X-Requested-With,content-type",
+            },
+          }
+        );
       } else {
         return NextResponse.json({
           success: false,
