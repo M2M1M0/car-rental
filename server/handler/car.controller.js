@@ -10,7 +10,11 @@ export const cars = async (_, res, next) => {
     }
 }
 
-export const addCar = async (_, res, next) => {
+export const addCar = async (req, res, next) => {
+    const images = []
+    req?.files?.map((file) => {
+        images.push(file.path)
+    })
     try {
         const { owner, title, type, price, capacity, transmission, location, fuelCapacity, description, images } = req.body;
 
