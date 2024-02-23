@@ -67,20 +67,28 @@ const AddCarForm = () => {
             const fileNames = filesArray.map(file => file.name);
             setValue('images', fileNames);
         }
+
     };
 
-    const headers = {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "",
-    };
+    // const headers = {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json",
+    //     Authorization: "",
+    // };
 
-    const onSubmit = async (data: FormValues) => {
+
+    const onSubmit = async (data: any) => {
+        const formData = new FormData()
         console.log(errors);
         // Handle form submission here 
-        data.owner = userID
+        Object.keys(data).forEach((key: string) => formData.append(key, data[key]));
+
+        selectedImages.forEach(image => formData.append('images', image));
+
+        formData.append("owner", userID)
+
         try {
-            await axios.post(`${process.env.BASE_API_URL}car/add-car`, data, { headers })
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/car/add-car`, formData)
             toast.success("Car Registered SuccessFully")
             router.push("/")
         } catch (error) {
