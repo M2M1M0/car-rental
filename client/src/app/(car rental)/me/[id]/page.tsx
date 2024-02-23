@@ -21,7 +21,7 @@ const MyProfile = () => {
         `getUserInfo ${userID}`,
         async () =>
             await axios.get(
-                `${process.env.NEXT_PUBLIC_BASE_URL}user/show-profile/${userID}`,
+                `${process.env.NEXT_PUBLIC_API_URL}/user/show-profile/${userID}`,
                 {
                     headers,
                 }

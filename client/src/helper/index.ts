@@ -18,7 +18,7 @@ export const User = () => {
         `getUserInfo ${userID}`,
         async () =>
             await axios.get(
-                `${process.env.BASE_API_URL}user/show-details/${userID}`,
+                `${process.env.NEXT_PUBLIC_API_URL}/user/show-details/${userID}`,
                 {
                     headers,
                 }
@@ -43,7 +43,7 @@ export const Cars = () => {
         `getAllCars`,
         async () =>
             await axios.get(
-                `${process.env.BASE_API_URL}car`,
+                `${process.env.NEXT_PUBLIC_API_URL}/car`,
                 {
                     headers,
                 }

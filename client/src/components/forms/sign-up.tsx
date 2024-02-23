@@ -30,7 +30,7 @@ const SignUpForm = () => {
             setIsLoading(true)
             console.log(process.env.NEXT_BASE_API_URL!)
             const response = await axios.post(
-                process.env.NEXT_BASE_API_URL! + "auth/register",
+                process.env.NEXT_PUBLIC_API_URL! + "/auth/register",
                 userData
             );
             toast.success("Register Success")

@@ -29,7 +29,7 @@ export const options: NextAuthOptions = {
                     return null
                 }
                 const response = await axios.post(
-                    process.env.NEXT_BASE_API_URL! + "auth/login",
+                    process.env.NEXT_PUBLIC_API_URL! + "/auth/login",
                     credentials
                 );
                 console.log(response, "resp")

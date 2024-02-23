@@ -45,7 +45,7 @@ const RentForm = ({ carId, setIsOpen, setIsRentOpen }: Props) => {
         data.car = carId
 
         try {
-            await axios.post(`${process.env.BASE_API_URL}rent`, data, { headers })
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/rent`, data, { headers })
             toast.success("Car Rented SuccessFully")
             setTimeout(() => {
                 setIsRentOpen(false)

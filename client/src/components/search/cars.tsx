@@ -17,7 +17,7 @@ const Cars = () => {
         `getAllCars`,
         async () =>
             await axios.get(
-                `${process.env.BASE_API_URL}car`,
+                `${process.env.NEXT_PUBLIC_API_URL}/car`,
                 {
                     headers,
                 }
