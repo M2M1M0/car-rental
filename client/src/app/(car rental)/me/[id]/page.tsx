@@ -21,7 +21,7 @@ const MyProfile = () => {
         `getUserInfo ${userID}`,
         async () =>
             await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/user/show-profile/${userID}`,
+                `${process.env.NEXT_PUBLIC_API_URL}/user/show-details/${userID}`,
                 {
                     headers,
                 }
@@ -35,13 +35,15 @@ const MyProfile = () => {
         }
     );
 
-    const currentUser = getUserInfo?.data?.data?.message
+
+    const currentUser = getUserInfo?.data?.data
+
 
     return (
         <section className='md:px-16 py-2'>
-            <Profile currentUser={currentUser}/>
-            <RentedCar getRentCars={getUserInfo} cars={currentUser?.rent}/>
-            <OwnCar getMyCars={getUserInfo} cars={currentUser?.cars}/>
+            <Profile currentUser={currentUser} />
+            <RentedCar getRentCars={getUserInfo} cars={currentUser?.rent} />
+            <OwnCar getMyCars={getUserInfo} cars={currentUser?.cars} />
         </section>
     )
 }

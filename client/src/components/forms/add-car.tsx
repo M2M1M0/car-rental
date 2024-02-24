@@ -47,11 +47,9 @@ const AddCarForm = () => {
     const userID = session?.user?._id;
 
     const router = useRouter()
-    const { register, handleSubmit, setValue, formState: { errors, isValid, isLoading } } = useForm<FormValues>({
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormValues>({
         resolver: zodResolver(addCarSchema),
-        // defaultValues: {
-        //     price: 0, // Default value for price
-        // }
+
     });
 
     useEffect(() => {
@@ -70,29 +68,28 @@ const AddCarForm = () => {
 
     };
 
-    // const headers = {
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json",
-    //     Authorization: "",
-    // };
+    const [isLoading, setIsLoading] = useState(false)
 
 
     const onSubmit = async (data: any) => {
         const formData = new FormData()
-        console.log(errors);
+
         // Handle form submission here 
         Object.keys(data).forEach((key: string) => formData.append(key, data[key]));
 
         selectedImages.forEach(image => formData.append('images', image));
 
         formData.append("owner", userID)
-
+        setIsLoading(true)
         try {
             await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/car/add-car`, formData)
             toast.success("Car Registered SuccessFully")
             router.push("/")
         } catch (error) {
+            toast.error("Failed to register. Try again")
             console.log(error)
+        } finally {
+            setIsLoading(false)
         }
 
     };
@@ -218,13 +215,16 @@ const AddCarForm = () => {
                     onChange={handleFileChange}
                 />
             </div>
-            <div className='my-6 flex justify-end'>
+            <div className='mt-6 flex flex-col gap-2 items-end'>
                 <button
-                    disabled={isLoading}
+                    disabled={isLoading || !userID}
                     type="submit"
-                    className={`$ btn__bg py-2 px-5 text-xs font-medium text-white rounded-md`}>
+                    className={`flex items-center justify-center ${isLoading || !userID ? "bg-gray-500" : "btn__bg"} py-2 px-5 text-xs font-medium text-white rounded-md min-w-32 max-w-32`}>
                     {isLoading ? <VscLoading /> : "Register Car"}
                 </button>
+                {!userID &&
+                    <p className='text-red-500 text-sm animate-bounce'>Login First</p>
+                }
             </div>
             <Toaster />
         </form>

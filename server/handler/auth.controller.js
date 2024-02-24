@@ -1,4 +1,6 @@
-import User from "../model/car.model.js";
+import User from "../model/user.model.js";
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
 export const register = async (req, res, next) => {
     const { email, username, password } = req.body
@@ -23,16 +25,16 @@ export const register = async (req, res, next) => {
 
 
     } catch (error) {
+        console.log(error, "Register Err")
         next(error)
     }
 }
 
 export const login = async (req, res, next) => {
     const { username, password } = req.body
-    console.log(username, password)
+
     try {
         const user = await User.findOne({ username: username.toLowerCase() })
-        console.log(user)
 
         if (!user) {
             console.log("Wrong Credentials")
@@ -50,13 +52,13 @@ export const login = async (req, res, next) => {
             maxAge: 60 * 60 * 1000, // 1 hour 
             httpOnly: true,
         }
-        // console.log(token)
         res
             .cookie("access_token", token, cookieOptions)
             .status(200)
             .json(user)
 
     } catch (error) {
+        console.log(error, "Login Err")
         next(error)
     }
 }

@@ -6,8 +6,6 @@ import RecommendedCars from "@/components/home/recommended-cars";
 
 export default function Home() {
 
-
-
   return (
     <Container>
       <main className="flex flex-col gap-6">

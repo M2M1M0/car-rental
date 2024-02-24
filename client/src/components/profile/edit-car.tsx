@@ -45,8 +45,8 @@ const EditCar = () => {
                                     leaveTo="opacity-0 scale-95"
                                 >
                                     <Dialog.Panel className="relative w-full max-w-xl transform overflow-hidden rounded-md bg-white p-2 text-left align-middle shadow-xl transition-all">
-                                        <div className='w-64 h-48 bg-white'>
-                                            <span></span>
+                                        <div className='flex items-center justify-center w-64 h-48 bg-white'>
+                                            <span>Coming Soon</span>
                                         </div>
                                         <button onClick={() => setIsOpen(false)}
                                             className='absolute bg-white rounded-full px-3 py-1.5 font-bold text-sm top-3 right-3'>

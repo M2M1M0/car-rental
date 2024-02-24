@@ -11,12 +11,6 @@ const RentedCar = ({ getRentCars, cars }: any) => {
                 <h2 className='text-sm font-medium py-1'>Rented Cars</h2>
             </div>
             <div className='gap-4 flex overflow-x-auto mb-1'>
-                {getRentCars?.isFetching &&
-
-                    <div className='h-48 flex items-center justify-center w-full'>
-                        <BiLoader className='animate-spin' size={30} />
-                    </div>
-                }
                 {cars?.length === 0 ? (
                     <div className='h-48 flex items-center justify-center w-full'>
                         No Car Found
@@ -29,6 +23,12 @@ const RentedCar = ({ getRentCars, cars }: any) => {
                             car={car?.car}
                             getAllCars={getRentCars} />
                     ))
+                }
+                {getRentCars?.isFetching &&
+
+                    <div className='h-48 flex items-center justify-center w-full'>
+                        <BiLoader className='animate-spin' size={30} />
+                    </div>
                 }
             </div>
         </div>

@@ -4,6 +4,6 @@ const router = express.Router()
 
 router.get("/", users)
 router.get("/show-details/:id", showUserDetail)
-router.post("/update-profile/:id", updateProfile)
+router.put("/update-profile/:id", updateProfile)
 
 export default router

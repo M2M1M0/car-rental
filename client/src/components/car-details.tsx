@@ -21,7 +21,7 @@ const CarDetails = ({ car, variant, isOpen, setIsOpen }: Props) => {
 
     // Is current user rented this car
     const filterRentedCar = currentUser?.rent?.filter((rented: any) => rented?.car?._id === car?._id)
-    
+
     // Is this car belongs to current user
     const filterOwnCar = currentUser?.cars?.filter((cars: any) => cars?._id === car?._id)
 
@@ -67,21 +67,29 @@ const CarDetails = ({ car, variant, isOpen, setIsOpen }: Props) => {
                                         {/* Car Image */}
                                         <section className='grid grid-rows-3 gap-3 h-52 md:h-full'>
                                             <div className='relative w-full h-full row-span-2'>
-                                                <Image src={`/${car?.images[0]}`} alt="Car" fill
-                                                    className='object-cover rounded-md' />
+                                                {car?.images &&
+                                                    <Image src={`${car?.images[0]?.url}`} alt="Car" fill
+                                                        className='object-cover rounded-md' />
+                                                }
                                             </div>
                                             <div className='grid grid-cols-3 gap-2 row-span-1'>
                                                 <div className='relative w-full h-full'>
-                                                    <Image src={`/${car?.images[2] ? car?.images[2] : "cover.jpg"}`} alt="Car" fill
-                                                        className='object-cover rounded-md' />
+                                                    {car?.images &&
+                                                        <Image src={`${car?.images[2] ? car?.images[2]?.url : "cover.jpg"}`} alt="Car" fill
+                                                            className='object-cover rounded-md' />
+                                                    }
                                                 </div>
                                                 <div className='relative w-full h-full'>
-                                                    <Image src={`/${car?.images[1] ? car?.images[1] : "cover.jpg"}`} alt="Car" fill
-                                                        className='object-cover rounded-md' />
+                                                    {car?.images &&
+                                                        <Image src={`${car?.images[1] ? car?.images[1]?.url : "cover.jpg"}`} alt="Car" fill
+                                                            className='object-cover rounded-md' />
+                                                    }
                                                 </div>
                                                 <div className='relative w-full h-full'>
-                                                    <Image src={`/${car?.images[3] ? car?.images[3] : "cover.jpg"}`} alt="Car" fill
-                                                        className='object-cover rounded-md' />
+                                                    {car?.images &&
+                                                        <Image src={`${car?.images[3] ? car?.images[3]?.url : "cover.jpg"}`} alt="Car" fill
+                                                            className='object-cover rounded-md' />
+                                                    }
                                                 </div>
                                             </div>
                                         </section>
@@ -92,8 +100,9 @@ const CarDetails = ({ car, variant, isOpen, setIsOpen }: Props) => {
                                                 {car?.title}
                                             </h2>
                                             <div className="flex items-center text-xs gap-2">
-                                                <ArrayStar rating={3} />
-                                                <span className='text__medium'>440+ Reviews</span>
+                                                <ArrayStar rating={(Math.floor(Math.random() * 5) + 1)} />
+                                                <span className='text__medium'>
+                                                    {(Math.floor(Math.random() * 1000) + 50)}+ Reviews</span>
                                             </div>
                                             <p className="text-xs font-serif leading-5">
                                                 {car?.description}
@@ -126,12 +135,12 @@ const CarDetails = ({ car, variant, isOpen, setIsOpen }: Props) => {
                                             {/*  */}
                                             <div className='flex justify-between mt-2'>
                                                 <div className='leading-3'>
-                                                    <p className='text-md'>{car?.price}/
-                                                        <span className='text__medium  self-end'>{" "}day</span>
+                                                    <p className='text-md'>ETB{" "} {car?.price}/
+                                                        <span className='text__medium  self-end'>day</span>
                                                     </p>
-                                                    <span className='text__medium line-through'>
+                                                    {/* <span className='text__medium line-through'>
                                                         $100.00
-                                                    </span>
+                                                    </span> */}
                                                 </div>
 
                                                 {/*  */}

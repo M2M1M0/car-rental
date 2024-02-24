@@ -16,11 +16,6 @@ type Props = {
     setIsEditProOpen: Dispatch<SetStateAction<boolean>>
 }
 
-const headers = {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    Authorization: "",
-};
 
 const EditProfile = ({ currentUser, isEditPrOpen, setIsEditProOpen }: Props) => {
     const router = useRouter()
@@ -45,20 +40,29 @@ const EditProfile = ({ currentUser, isEditPrOpen, setIsEditProOpen }: Props) => 
         setCoverImage(e.target.files);
     };
 
+
     const handleSubmit = async (e: any) => {
         e.preventDefault()
 
+        const formData = new FormData()
         // Handle form submission here 
-        let user = {
-            username: currentUser?.username,
-            email: email || currentUser?.email,
-            profilePicture: profileImage[0]?.name || currentUser?.profilePicture,
-            coverPicture: coverImage[0]?.name || currentUser?.coverPicture
+
+        // selectedImages.forEach(image => formData.append('images', image));
+
+        formData.append("username", currentUser?.username)
+        formData.append("email", email || currentUser?.email)
+
+        if (profileImage && profileImage.length > 0) {
+            formData.append("profilePicture", profileImage[0])
         }
+        if (coverImage && coverImage.length > 0) {
+            formData.append("coverPicture", coverImage[0])
+        }
+
 
         try {
             setIsLoading(true)
-            await axios.put(`${process.env.BASE_API_URL}user/update-profile/${userID}`, user, { headers })
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/user/update-profile/${userID}`, formData)
             toast.success("Profile SuccessFully Updated")
             router.push("/")
         } catch (error) {
@@ -66,6 +70,8 @@ const EditProfile = ({ currentUser, isEditPrOpen, setIsEditProOpen }: Props) => 
         } finally {
             setIsLoading(false)
             setIsEditProOpen(false)
+            setProfileImage([])
+            setCoverImage([])
         }
 
     };
@@ -125,18 +131,7 @@ const EditProfile = ({ currentUser, isEditPrOpen, setIsEditProOpen }: Props) => 
                                                         className='col-span-2 text-sm p-1 border-2 rounded-md'
                                                     />
                                                 </div>
-                                                {/* <div className='grid grid-cols-3 items-center gap-2'>
-                                                    <label className='text-md'>
-                                                        Password:
-                                                    </label>
-                                                    <input
-                                                        type='password'
-                                                        name='password'
-                                                        defaultValue={currentUser?.password}
-                                                        onChange={handlePasswordChange}
-                                                        className='col-span-2 text-sm p-1 border-2 rounded-md'
-                                                    />
-                                                </div> */}
+                                                
                                                 <div className='flex flex-col gap-2 h-36 mt-4'>
 
                                                     <label
@@ -152,7 +147,7 @@ const EditProfile = ({ currentUser, isEditPrOpen, setIsEditProOpen }: Props) => 
                                                                         className="object-cover rounded-md" />
                                                                     : currentUser?.coverPicture &&
                                                                     <Image
-                                                                        src={`/${currentUser?.coverPicture}`}
+                                                                        src={`${currentUser?.coverPicture}`}
                                                                         alt='Picture'
                                                                         fill
                                                                     />
@@ -191,7 +186,7 @@ const EditProfile = ({ currentUser, isEditPrOpen, setIsEditProOpen }: Props) => 
                                                                         className="object-cover rounded-md" />
                                                                     : currentUser?.profilePicture &&
                                                                     <Image
-                                                                        src={`/${currentUser?.profilePicture}`}
+                                                                        src={`${currentUser?.profilePicture}`}
                                                                         alt='Picture'
                                                                         fill
                                                                     />
@@ -222,7 +217,7 @@ const EditProfile = ({ currentUser, isEditPrOpen, setIsEditProOpen }: Props) => 
                                         {/* Submit */}
                                         <button
                                             type='submit'
-                                            className='px-3 py-1.5 font-bold rounded-lg text-md uppercase w-full bg-blue-500 mt-8 text-white text-center'>
+                                            className='flex justify-center items-center px-3 py-1.5 font-bold rounded-lg text-md uppercase w-full bg-blue-500 mt-8 text-white text-center'>
                                             {isLoading ? <VscLoading size={20} /> : "Update"}
                                         </button>
                                     </form>

@@ -31,18 +31,12 @@ const Cars = () => {
         }
     );
 
-    const cars = getAllCars?.data?.data?.data
-    console.log(cars, "cars")
+    const cars = getAllCars?.data?.data
 
 
     return (
         <div className='mt-4 grid md:grid-cols-3 gap-2 md:gap-6'>
-            {getAllCars?.isFetching &&
 
-                <div className='h-48 flex items-center justify-center w-full'>
-                    <BiLoader className='animate-spin' size={30} />
-                </div>
-            }
             {cars?.length === 0
                 ? (
                     <div className='h-48 flex items-center justify-center w-full'>
@@ -57,6 +51,12 @@ const Cars = () => {
                         getAllCars={getAllCars} />
                 ))
 
+            }
+            {getAllCars?.isFetching &&
+
+                <div className='h-48 flex items-center justify-center w-full'>
+                    <BiLoader className='animate-spin' size={30} />
+                </div>
             }
         </div>
     )

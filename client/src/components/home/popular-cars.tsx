@@ -22,13 +22,6 @@ const PopularCars = () => {
                     className='underline text-xs cursor-pointer hover:text-gray-500'>View All</Link>
             </div>
             <div className='gap-4 flex overflow-x-auto mb-1'>
-                {getAllCars?.isFetching &&
-
-                    <div className='h-48 flex items-center justify-center w-full'>
-                        <BiLoader className='animate-spin' size={30} />
-                    </div>
-                }
-
                 {cars?.length === 0 ? (
                     <div className='h-48 flex items-center justify-center w-full'>
                         No Car Found
@@ -40,6 +33,12 @@ const PopularCars = () => {
                             car={car}
                             getAllCars={getAllCars} />
                     ))
+                }
+                {getAllCars?.isFetching &&
+
+                    <div className='h-48 flex items-center justify-center w-full'>
+                        <BiLoader className='animate-spin' size={30} />
+                    </div>
                 }
             </div>
         </div>

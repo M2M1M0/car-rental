@@ -4,8 +4,10 @@ import Filter from './filer'
 
 const SearchSideBar = () => {
   return (
-    <aside className='flex flex-col gap-6 p-3 py-6'>
-
+    <aside className='flex flex-col gap-5 p-3 py-6'>
+      <p className='text-gray-500 text-sm font-extrabold'>
+        Search functionality <br /> Coming Soon!
+      </p>
       {/* Search */}
       <div className='flex flex-col gap-3'>
         <h3 className='text-[9px] uppercase text-gray-500'>Search</h3>

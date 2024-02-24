@@ -53,7 +53,8 @@ const carSchema = new mongoose.Schema(
             type: String,
         },
         images: [{
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Image"
         }]
     },
     { timestamps: true }

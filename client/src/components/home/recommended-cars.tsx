@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import { BiLoader } from 'react-icons/bi'
+import { Cars } from '@/helper'
 
 const headers = {
     "Content-Type": "application/json",
@@ -14,25 +15,10 @@ const headers = {
 
 const RecommendedCars = () => {
 
-    const getAllCars = useQuery(
-        `getAllCars`,
-        async () =>
-            await axios.get(
-                `${process.env.BASE_API_URL}car`,
-                {
-                    headers,
-                }
-            ),
-        {
-            keepPreviousData: true,
-            retry: false,
-            onError: (err) => {
-                console.log("Cars fetching Error", err);
-            },
-        }
-    );
-
-    const cars = getAllCars?.data?.data?.data
+    // Get All cars
+    const response = Cars()
+    let cars = response?.cars
+    let getAllCars = response?.getAllCars
 
     return (
         <div className='flex flex-col gap-1'>
@@ -42,18 +28,15 @@ const RecommendedCars = () => {
                     className='underline text-xs cursor-pointer hover:text-gray-500'>View All</Link>
             </div>
             <div className='gap-4 flex overflow-x-auto mb-1'>
-                {getAllCars?.isFetching &&
 
-                    <div className='h-48 flex items-center justify-center w-full'>
-                        <BiLoader className='animate-spin' size={30} />
-                    </div>
-                }
 
                 {cars?.length === 0 ? (
                     <div className='h-48 flex items-center justify-center w-full'>
                         No Car Found
                     </div>
-                ) : <></>
+                ) : <div className='flex items-center justify-center w-full h-32'>
+                    <p className='text-gray-500'>Coming Soon..</p>
+                </div>
                     // cars?.map((car: any) => (
                     //     <CarCard
                     //         key={car._id}
@@ -61,6 +44,12 @@ const RecommendedCars = () => {
                     //         getAllCars={getAllCars} />
                     // ))
                 }
+                {/* {getAllCars?.isFetching &&
+
+                    <div className='h-48 flex items-center justify-center w-full'>
+                        <BiLoader className='animate-spin' size={30} />
+                    </div>
+                } */}
             </div>
         </div>
     )

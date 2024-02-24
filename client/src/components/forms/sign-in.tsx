@@ -24,9 +24,8 @@ const SignInForm = () => {
     const { register, handleSubmit } = useForm<IFormInput>()
 
     const userLogin = async (userData: any) => {
-
         try {
-            setIsLoading(true)
+            setIsLoading(true);
             const result = await signIn('credentials', {
                 username: userData.username,
                 password: userData.password,
@@ -34,29 +33,27 @@ const SignInForm = () => {
                 callbackUrl: "/"
             });
 
+            console.log(result)
             if (result?.error) {
-                // Handle error (e.g., wrong credentials)
-                console.log(result?.error)
-                toast.error(result.error);
-
+                // Handle NextAuth.js login errors
+                if (result.error === 'CredentialsSignin') {
+                    toast.error("Invalid username or password");
+                } else {
+                    toast.error("An error occurred during login");
+                }
+            } else if (result === undefined) {
+                toast.error("Invalid username or password"); // Display error for undefined result
             } else {
                 // No error, proceed to redirect
-                toast.success("Login");
                 router.prefetch('/');
                 router.push(result?.url || "/");
             }
-            // const response = await axios.post(
-            //     process.env.NEXT_PUBLIC_BASE_URL! + "login",
-            //     userData
-            // );
-            // return response.data.data;
-
         } catch (error: any) {
             console.log(error);
-            toast.error("Wrong Credentials!")
+            toast.error("An error occurred during login"); // Display general error message
 
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
     };
 

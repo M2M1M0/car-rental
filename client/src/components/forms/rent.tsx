@@ -39,7 +39,6 @@ const RentForm = ({ carId, setIsOpen, setIsRentOpen }: Props) => {
     });
 
     const onSubmit = async (data: FormValues) => {
-        console.log(data);
         // Handle form submission here 
         data.rentedBy = userID
         data.car = carId

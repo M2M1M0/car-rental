@@ -32,11 +32,11 @@ export const options: NextAuthOptions = {
                     process.env.NEXT_PUBLIC_API_URL! + "/auth/login",
                     credentials
                 );
-                console.log(response, "resp")
+                // console.log(response.data, "resp")
                 if (!response) {
                     return null
                 } else {
-                    return response.data.data;
+                    return response.data;
                 }
 
             },

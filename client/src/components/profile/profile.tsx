@@ -18,20 +18,22 @@ const Profile = ({ currentUser }: any) => {
             <div className='relative w-full'>
                 <div className='relative w-full h-32'>
                     {/* Cover Image */}
-                    <Image
-                        src={`/${currentUser?.coverPicture}`}
-                        alt=""
-                        fill
-                        className='object-cover rounded-md' />
-
+                    {currentUser?.coverPicture &&
+                        <Image
+                            src={`${currentUser?.coverPicture}`}
+                            alt=""
+                            fill
+                            className='object-cover rounded-md' />
+                    }
                     {/* Profile Picture */}
-                    <Image
-                        src={`/${currentUser?.profilePicture}`}
-                        alt=""
-                        width={60}
-                        height={60}
-                        className='!w-16 !h-16 absolute -bottom-6 left-5 object-cover rounded-full' />
-
+                    {currentUser?.profilePicture &&
+                        <Image
+                            src={`${currentUser?.profilePicture}`}
+                            alt=""
+                            width={60}
+                            height={60}
+                            className='!w-16 !h-16 absolute -bottom-6 left-5 object-cover rounded-full' />
+                    }
                 </div>
                 <div className='flex justify-between md:px-8 w-full mt-8'>
                     <div className='flex flex-col gap-1'>

@@ -28,7 +28,6 @@ const SignUpForm = () => {
 
         try {
             setIsLoading(true)
-            console.log(process.env.NEXT_BASE_API_URL!)
             const response = await axios.post(
                 process.env.NEXT_PUBLIC_API_URL! + "/auth/register",
                 userData
@@ -40,8 +39,7 @@ const SignUpForm = () => {
             if (error.response) {
                 // The request was made and the server responded with a status code
                 // that falls out of the range of 2xx
-                console.log(error.response.data.message);
-                toast.error(error.response.data.message);
+                toast.error("Invalid Request please Try again.");
 
                 // console.log(error.response.status);
                 // console.log(error.response.headers);

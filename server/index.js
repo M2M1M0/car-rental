@@ -32,7 +32,7 @@ const storage = new CloudinaryStorage({
     params: {
         folder: 'car-rental', // The folder in your Cloudinary account where the audio files will be stored
         resource_type: 'auto',
-        allowed_formats: ['jpg', 'png', 'mp3', 'mp4', 'wav', "m4a"], // Specify the audio formats you want to allow
+        allowed_formats: ['jpg', 'png', 'gif', 'bmp', 'webp', 'svg', 'tiff', 'ico', 'jpeg'], // Add common image formats
         transformation: [{ width: 500, height: 500, crop: 'limit' }]
     },
 });
@@ -45,9 +45,22 @@ app.get('/', (_, res) => {
 
 //Routes
 app.use("/auth", authRouter)
-app.use("/user", upload.array("images"), userRouter)
+app.use("/car", (req, res, next) => {
+    upload.array("images", 5)(req, res, (err) => {
+        if (err) {
+            // console.log(err, "car images upload err")
+            return next("Format not allowed"); // Pass the error to the next middleware
+        }
+        next();
+    });
+}, carRouter);
+
 app.use("/rent", rentRouter)
-app.use("/car", upload.array("images"), carRouter)
+
+app.use("/user", upload.fields([
+    { name: 'profilePicture', maxCount: 1 },
+    { name: 'coverPicture', maxCount: 1 }
+]), userRouter);
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {

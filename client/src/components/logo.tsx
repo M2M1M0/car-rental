@@ -3,7 +3,7 @@ import React from 'react'
 
 const Logo = () => {
     return (
-        <Link href="/" className='font-bold text-xl text-blue-500'>
+        <Link href="/" className='font-bold text-xl text-blue-500 whitespace-nowrap'>
             <span className='text-orange-500'>C</span>
             AR RENT
         </Link>

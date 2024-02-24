@@ -13,7 +13,7 @@ export const User = () => {
 
     //@ts-ignore
     let userID = session?.user?._id
-    
+   
     const getUserInfo = useQuery(
         `getUserInfo ${userID}`,
         async () =>
@@ -27,12 +27,12 @@ export const User = () => {
             keepPreviousData: true,
             retry: false,
             onError: (err) => {
-                console.log("User Detail Info", err);
+                console.log("User Detail Info..", err);
             },
         }
     );
 
-    const currentUser = getUserInfo?.data?.data?.message
+    const currentUser = getUserInfo?.data?.data
 
     if (currentUser) return currentUser
 }
@@ -57,7 +57,7 @@ export const Cars = () => {
         }
     );
 
-    const cars = getAllCars?.data?.data?.data
+    const cars = getAllCars?.data?.data
 
     if (cars) return { cars, getAllCars }
 }

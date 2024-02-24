@@ -46,8 +46,10 @@ const CarCard = ({ variant, getAllCars, car }: CarCardProps) => {
 
                         <div className={`${variant === "allCars" && "flex md:flex-col"}`}>
                             <div className='my-2 py-16 px-2 relative w-full h-full'>
-                                <Image src={`/${car?.images ? car?.images[0] : ""}`} alt="Car" fill
-                                    className='object-contain' />
+                                {car?.images &&
+                                    <Image src={`${car?.images ? car?.images[0]?.url : ""}`} alt="Car" fill
+                                        className='object-contain' />
+                                }
                             </div>
                             <div className={`${variant === "own" ? "hidden" : "block"}`}>
 
@@ -69,8 +71,8 @@ const CarCard = ({ variant, getAllCars, car }: CarCardProps) => {
                         </div>
 
                         <div className={`${variant === "own" ? "hidden" : "block"} flex justify-between mt-2 gap-x3`}>
-                            <p className='text-sm'>ETB {car?.price}/
-                                <span className='text__medium  self-end'>{" "}day</span>
+                            <p className='text-xs'>ETB{" "} {car?.price}/
+                                <span className='text__medium  self-end'>day</span>
                             </p>
                             <button type="button"
                                 onClick={openModal}

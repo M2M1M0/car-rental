@@ -18,12 +18,12 @@ const userSchema = new mongoose.Schema(
         profilePicture: {
             type: String,
             required: false,
-            default: "photo.jpg"
+            default: "https://res.cloudinary.com/dghcj3f6d/image/upload/v1708699426/car-rental/magc7nk73agkcj41mnvw.jpg"
         },
         coverPicture: {
             type: String,
             required: false,
-            default: "cover.jpg"
+            default: "https://res.cloudinary.com/dghcj3f6d/image/upload/v1708699426/car-rental/pd6kuvk2cixrgbxs9103.jpg"
         },
         cars: [{
             type: mongoose.Schema.Types.ObjectId,

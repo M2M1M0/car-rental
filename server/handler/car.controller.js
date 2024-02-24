@@ -1,9 +1,10 @@
 import Car from "../model/car.model.js";
+import Image from "../model/image.model.js";
 import User from "../model/user.model.js";
 
 export const cars = async (_, res, next) => {
     try {
-        const cars = await Car.find();
+        const cars = await Car.find()?.populate("images");
         res.status(200).json(cars)
     } catch (error) {
         next(error)
@@ -11,38 +12,47 @@ export const cars = async (_, res, next) => {
 }
 
 export const addCar = async (req, res, next) => {
-    const images = []
-    req?.files?.map((file) => {
-        images.push(file.path)
-    })
-    try {
-        const { owner, title, type, price, capacity, transmission, location, fuelCapacity, description, images } = req.body;
+    const { owner, title, type, price, capacity, transmission, location, fuelCapacity, description } = req.body;
 
-        const newCar = await Car.create({
-            owner,
-            title,
-            type,
-            price,
-            capacity,
-            transmission,
-            location,
-            fuelCapacity,
-            description,
-            images
-        });
+    if (req.files === undefined || req.files.length === 0) {
+        return res.status(400).json({ message: "Failed to upload images try again" });
+    } else {
 
-        const user = await User.findById({ _id: owner });
 
-        if (owner === undefined || null) {
-            next("Invalid owner")
+        try {
+            const imageIds = [];
+            for (const file of req.files) {
+                const newImage = await Image.create({ url: file.path });
+                imageIds.push(newImage._id);
+            }
+
+            const newCar = await Car.create({
+                owner,
+                title,
+                type,
+                price,
+                capacity,
+                transmission,
+                location,
+                fuelCapacity,
+                description,
+                images: imageIds
+            });
+
+            const user = await User.findById(owner);
+
+            if (!user) {
+                return next("Invalid owner");
+            }
+
+            user?.cars?.push(newCar._id);
+            await user.save();
+
+            res.status(201).json({ message: "Car added successfully" });
+
+        } catch (error) {
+            console.log(error, "Error adding car..");
+            next(error);
         }
-
-        if (newCar && user) {
-            user.cars.push(newCar._id); // Push the new car's ID to the user's cars array
-            await user.save(); // Save the user document to update the database
-        }
-        res.status(201).json("registered success")
-    } catch (error) {
-        next(error)
     }
 }
