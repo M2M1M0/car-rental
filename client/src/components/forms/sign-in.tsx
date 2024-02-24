@@ -33,7 +33,9 @@ const SignInForm = () => {
                 callbackUrl: "/"
             });
 
-            console.log(result)
+            // if (result === undefined) {
+            //     toast.error("Invalid username or password"); // Display error for undefined result
+            // } else
             if (result?.error) {
                 // Handle NextAuth.js login errors
                 if (result.error === 'CredentialsSignin') {
@@ -41,8 +43,6 @@ const SignInForm = () => {
                 } else {
                     toast.error("An error occurred during login");
                 }
-            } else if (result === undefined) {
-                toast.error("Invalid username or password"); // Display error for undefined result
             } else {
                 // No error, proceed to redirect
                 router.prefetch('/');
