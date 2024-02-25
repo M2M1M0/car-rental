@@ -22,7 +22,8 @@ const SignUpForm = () => {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false);
 
-    const { register, handleSubmit } = useForm<IFormInput>()
+    const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+
 
     const registerUser = async (userData: any) => {
 
@@ -88,6 +89,7 @@ const SignUpForm = () => {
                         })}
                             placeholder="Example@company.com"
                             className="border text-sm w-full bg-slate-100 rounded-md p-1.5" />
+                        {errors.email && <p>{errors.email.message}</p>}
                     </div>
 
                     <div>
