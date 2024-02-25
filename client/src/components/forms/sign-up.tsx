@@ -89,20 +89,30 @@ const SignUpForm = () => {
                         })}
                             placeholder="Example@company.com"
                             className="border text-sm w-full bg-slate-100 rounded-md p-1.5" />
-                        {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
+                        {errors.email && <p className="pt-1 text-xs text-red-500">{errors.email.message}</p>}
                     </div>
 
                     <div>
                         <label>Username</label>
-                        <input {...register("username")}
+                        <input
+                            {...register("username", {
+                                required: "Username is required"
+                            })}
                             className="border text-sm w-full bg-slate-100 rounded-md p-1.5" />
+                        {errors.username && <p className="pt-1 text-xs text-red-500">{errors.username.message}</p>}
+
                     </div>
 
                     <div>
                         <label>Password</label>
-                        <input {...register("password")}
+                        <input
+                            {...register("password", {
+                                required: "Password is required"
+                            })}
                             type="password"
                             className="border text-sm w-full bg-slate-100 rounded-md p-1.5" />
+                        {errors.password && <p className="pt-1 text-xs text-red-500">{errors.password.message}</p>}
+
                     </div>
 
                     <div className="flex flex-col gap-2 pt-4">
