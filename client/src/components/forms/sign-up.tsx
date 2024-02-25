@@ -79,10 +79,14 @@ const SignUpForm = () => {
                     <p className="text-center font-bold text-lg uppercase">Registration</p>
                     <div>
                         <label>Email</label>
-                        <input {...register("email")}
-                            // onChange={() => handleChange}
+                        <input  {...register("email", {
+                            required: "Email is required",
+                            pattern: {
+                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                                message: "Invalid email address"
+                            }
+                        })}
                             placeholder="Example@company.com"
-                            type="email"
                             className="border text-sm w-full bg-slate-100 rounded-md p-1.5" />
                     </div>
 
