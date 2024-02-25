@@ -89,7 +89,7 @@ const SignUpForm = () => {
                         })}
                             placeholder="Example@company.com"
                             className="border text-sm w-full bg-slate-100 rounded-md p-1.5" />
-                        {errors.email && <p>{errors.email.message}</p>}
+                        {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
                     </div>
 
                     <div>
