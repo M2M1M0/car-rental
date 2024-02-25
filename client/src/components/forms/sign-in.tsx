@@ -19,13 +19,11 @@ const SignInForm = () => {
 
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState("")
 
     const { register, handleSubmit } = useForm<IFormInput>()
 
     const userLogin = async (userData: any) => {
         try {
-            setError("")
             setIsLoading(true);
             const result = await signIn('credentials', {
                 username: userData.username,
@@ -35,13 +33,13 @@ const SignInForm = () => {
             });
 
             if (result?.status === 401) {
-                setError("Invalid username or password");
+                toast.error("Invalid username or password");
             } else if (result?.error) {
                 // Handle NextAuth.js login errors
                 if (result.error === 'CredentialsSignin') {
-                    setError("Invalid username or password");
+                    toast.error("Invalid username or password");
                 } else {
-                    setError("An error occurred during login");
+                    toast.error("An error occurred during login");
                 }
             } else {
                 // No error, proceed to redirect
@@ -50,7 +48,7 @@ const SignInForm = () => {
             }
         } catch (error: any) {
             console.log(error);
-            setError("An error occurred during login"); // Display general error message
+            toast.error("An error occurred during login"); // Display general error message
 
         } finally {
             setIsLoading(false);
@@ -71,9 +69,7 @@ const SignInForm = () => {
                 <form
                     onSubmit={handleSubmit(onSubmit)}
                     className="flex flex-col space-y-2 p-8 bg-white">
-                    {error !== "" &&
-                        <p className="text-xs text-red-500 bg-red-50 rounded-md p-1">{error}</p>
-                    }
+
                     <p className="text-center font-bold text-lg uppercase">Sign In</p>
 
                     <div>
