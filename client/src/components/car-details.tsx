@@ -135,8 +135,8 @@ const CarDetails = ({ car, variant, isOpen, setIsOpen }: Props) => {
                                             {/*  */}
                                             <div className='flex justify-between mt-2'>
                                                 <div className='leading-3'>
-                                                    <p className='text-md'>ETB{" "} {car?.price}/
-                                                        <span className='text__medium  self-end'>day</span>
+                                                    <p className='text-md'>ETB{" "} {car?.price}
+                                                        <sub className='text__medium  self-end'>/day</sub>
                                                     </p>
                                                     {/* <span className='text__medium line-through'>
                                                         $100.00

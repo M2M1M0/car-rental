@@ -13,28 +13,29 @@ export const User = () => {
 
     //@ts-ignore
     let userID = session?.user?._id
-   
-    const getUserInfo = useQuery(
-        `getUserInfo ${userID}`,
-        async () =>
-            await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/user/show-details/${userID}`,
-                {
-                    headers,
-                }
-            ),
-        {
-            keepPreviousData: true,
-            retry: false,
-            onError: (err) => {
-                console.log("User Detail Info..", err);
-            },
-        }
-    );
+    if (userID) {
+        const getUserInfo = useQuery(
+            `getUserInfo ${userID}`,
+            async () =>
+                await axios.get(
+                    `${process.env.NEXT_PUBLIC_API_URL}/user/show-details/${userID}`,
+                    {
+                        headers,
+                    }
+                ),
+            {
+                keepPreviousData: true,
+                retry: false,
+                onError: (err) => {
+                    console.log("User Detail Info..", err);
+                },
+            }
+        );
 
-    const currentUser = getUserInfo?.data?.data
+        const currentUser = getUserInfo?.data?.data
 
-    if (currentUser) return currentUser
+        if (currentUser) return currentUser
+    }
 }
 
 export const Cars = () => {
@@ -52,7 +53,7 @@ export const Cars = () => {
             keepPreviousData: true,
             retry: false,
             onError: (err) => {
-                console.log("Cars fetching Error", err);
+                // console.log("Cars fetching Error", err);
             },
         }
     );

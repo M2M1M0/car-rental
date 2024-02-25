@@ -7,7 +7,6 @@ import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useMutation } from "react-query";
 
-import axios from "axios";
 import toast, { Toaster } from 'react-hot-toast';
 import { signIn } from "next-auth/react";
 
@@ -20,11 +19,13 @@ const SignInForm = () => {
 
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("")
 
     const { register, handleSubmit } = useForm<IFormInput>()
 
     const userLogin = async (userData: any) => {
         try {
+            setError("")
             setIsLoading(true);
             const result = await signIn('credentials', {
                 username: userData.username,
@@ -33,15 +34,14 @@ const SignInForm = () => {
                 callbackUrl: "/"
             });
 
-            // if (result === undefined) {
-            //     toast.error("Invalid username or password"); // Display error for undefined result
-            // } else
-            if (result?.error) {
+            if (result?.status === 401) {
+                setError("Invalid username or password");
+            } else if (result?.error) {
                 // Handle NextAuth.js login errors
                 if (result.error === 'CredentialsSignin') {
-                    toast.error("Invalid username or password");
+                    setError("Invalid username or password");
                 } else {
-                    toast.error("An error occurred during login");
+                    setError("An error occurred during login");
                 }
             } else {
                 // No error, proceed to redirect
@@ -50,7 +50,7 @@ const SignInForm = () => {
             }
         } catch (error: any) {
             console.log(error);
-            toast.error("An error occurred during login"); // Display general error message
+            setError("An error occurred during login"); // Display general error message
 
         } finally {
             setIsLoading(false);
@@ -71,13 +71,15 @@ const SignInForm = () => {
                 <form
                     onSubmit={handleSubmit(onSubmit)}
                     className="flex flex-col space-y-2 p-8 bg-white">
+                    {error !== "" &&
+                        <p className="text-xs text-red-500 bg-red-50 rounded-md p-1">{error}</p>
+                    }
                     <p className="text-center font-bold text-lg uppercase">Sign In</p>
 
                     <div>
                         <label>Username</label>
                         <input
                             {...register("username")}
-                            placeholder="Username"
                             className="border text-sm w-full bg-slate-100 rounded-md p-1.5" />
                     </div>
 
@@ -85,7 +87,6 @@ const SignInForm = () => {
                         <label>Password</label>
                         <input
                             {...register("password")}
-                            placeholder="Password"
                             type="password"
                             className="border text-sm w-full bg-slate-100 rounded-md p-1.5" />
                     </div>

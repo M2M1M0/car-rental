@@ -83,7 +83,7 @@ const RentForm = ({ carId, setIsOpen, setIsRentOpen }: Props) => {
                             {...register('from')}
                             required
                             type="date"
-                            className='bg-[#f1f1f1] p-2 outline-none text-sm rounded-md' />
+                            className='w-full bg-[#f1f1f1] p-2 outline-none text-sm rounded-md' />
                     </div>
                 </div>
                 {/* Drop-Off */}
@@ -102,7 +102,7 @@ const RentForm = ({ carId, setIsOpen, setIsRentOpen }: Props) => {
                             {...register('to')}
                             required
                             type="date"
-                            className='bg-[#f1f1f1] p-2 outline-none text-sm rounded-md' />
+                            className='w-full bg-[#f1f1f1] p-2 outline-none text-sm rounded-md' />
                     </div>
                 </div>
             </div>

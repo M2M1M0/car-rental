@@ -71,8 +71,8 @@ const CarCard = ({ variant, getAllCars, car }: CarCardProps) => {
                         </div>
 
                         <div className={`${variant === "own" ? "hidden" : "block"} flex justify-between mt-2 gap-x3`}>
-                            <p className='text-xs'>ETB{" "} {car?.price}/
-                                <span className='text__medium  self-end'>day</span>
+                            <p className='text-xs'>ETB{" "} {car?.price}
+                                <sub className='text__medium  self-end'>/day</sub>
                             </p>
                             <button type="button"
                                 onClick={openModal}

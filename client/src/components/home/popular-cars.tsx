@@ -34,12 +34,13 @@ const PopularCars = () => {
                             getAllCars={getAllCars} />
                     ))
                 }
-                {getAllCars?.isFetching &&
+                {getAllCars?.isFetching || !cars &&
 
                     <div className='h-48 flex items-center justify-center w-full'>
                         <BiLoader className='animate-spin' size={30} />
                     </div>
                 }
+
             </div>
         </div>
     )
