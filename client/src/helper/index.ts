@@ -60,3 +60,28 @@ export const Cars = () => {
 
     if (cars) return { cars, getAllCars }
 }
+
+export const getCar = (id: string) => {
+
+    const getAllCar = useQuery(
+        `getAllCar`,
+        async () =>
+            await axios.get(
+                `${process.env.NEXT_PUBLIC_API_URL}/car/${id}`,
+                {
+                    headers,
+                }
+            ),
+        {
+            keepPreviousData: true,
+            retry: false,
+            onError: (err) => {
+                // console.log("Car fetching Error", err);
+            },
+        }
+    );
+
+    const car = getAllCar?.data?.data
+
+    if (car) return car
+}
