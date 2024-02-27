@@ -4,7 +4,7 @@ import * as Z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
-import { getCar } from '@/helper';
+import { GetCar } from '@/helper';
 import { UseQueryResult } from 'react-query';
 import axios, { AxiosResponse } from 'axios';
 import { EditCarFormProps } from '@/types';
@@ -83,7 +83,7 @@ const EditCarForm = ({ carID, setIsOpen }: EditCarFormProps) => {
         }
     }
 
-    const car = getCar(carID)
+    const car = GetCar(carID)
 
     return (
         <form

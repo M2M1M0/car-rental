@@ -61,7 +61,7 @@ export const Cars = () => {
     if (cars) return { cars, getAllCars }
 }
 
-export const getCar = (id: string) => {
+export const GetCar = (id: string) => {
 
     const getAllCar = useQuery(
         `getAllCar`,
