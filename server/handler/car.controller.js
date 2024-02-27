@@ -11,6 +11,44 @@ export const cars = async (_, res, next) => {
     }
 }
 
+export const getCar = async (req, res, next) => {
+    const { id } = req.params
+    try {
+        const cars = await Car.findById({ _id: id })?.populate("images");
+        res.status(200).json(cars)
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const updateCar = async (req, res, next) => {
+    const { id, owner } = req.params
+
+    try {
+        if (id === 'undefined') {
+            next("Invalid ID for update profile")
+        }
+
+        const car = await Car.findById({ _id: id })
+
+        if (car.owner.toString() !== owner) {
+            return res.status(400).json({ success: false, message: "You are not allowed to edit this car. You are not the owner" })
+        } else {
+
+            await Car.updateOne(
+                { _id: id },
+                req.body
+            )
+
+            res.status(200).json("Update Successfully")
+        }
+
+    } catch (error) {
+        console.log(error, "User update error");
+        next(error)
+    }
+}
+
 export const addCar = async (req, res, next) => {
     const { owner, title, type, price, capacity, transmission, location, fuelCapacity, description } = req.body;
 

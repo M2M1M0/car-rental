@@ -26,11 +26,11 @@ const CarCard = ({ variant, getAllCars, car }: CarCardProps) => {
                 (
                     <section className='w-full min-w-56 p-4 rounded-md shadow-md bg-white'>
                         <div className='flex flex-col'>
-                            <div className='flex justify-between'>
-                                <h3 className='text-sm font-bold'>{car?.title}</h3>
+                            <div className='flex justify-between gap-2'>
+                                <h3 className='text-sm font-bold whitespace-nowrap'>{car?.title}</h3>
                                 {/* === Edit own Car */}
                                 {variant === "own" ? (
-                                    <EditCar />
+                                    <EditCar carID={car?._id}/>
 
                                 ) : (
                                     <button onClick={() => setHeart((prev) => !prev)}>

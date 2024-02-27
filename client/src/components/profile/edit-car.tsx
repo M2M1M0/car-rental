@@ -1,9 +1,10 @@
 import React, { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { BiEdit } from 'react-icons/bi'
+import EditCarForm from './EditCarForm'
 
 
-const EditCar = () => {
+const EditCar = ({ carID }: { carID: string }) => {
     let [isOpen, setIsOpen] = useState(false)
 
     function closeModal() {
@@ -44,10 +45,12 @@ const EditCar = () => {
                                     leaveFrom="opacity-100 scale-100"
                                     leaveTo="opacity-0 scale-95"
                                 >
-                                    <Dialog.Panel className="relative w-full max-w-xl transform overflow-hidden rounded-md bg-white p-2 text-left align-middle shadow-xl transition-all">
-                                        <div className='flex items-center justify-center w-64 h-48 bg-white'>
-                                            <span>Coming Soon</span>
-                                        </div>
+                                    <Dialog.Panel className="relative w-full max-h-[450px] max-w-xl transform overflow-auto rounded-md bg-white p-2 text-left align-middle shadow-xl transition-all">
+                                        {/* <div className='flex items-center justify-center w-full h-72 overflow-auto bg-white'> */}
+
+                                        <EditCarForm carID={carID}  setIsOpen={setIsOpen}/>
+
+                                        {/* </div> */}
                                         <button onClick={() => setIsOpen(false)}
                                             className='absolute bg-white rounded-full px-3 py-1.5 font-bold text-sm top-3 right-3'>
                                             X
